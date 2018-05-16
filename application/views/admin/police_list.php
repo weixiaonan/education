@@ -32,19 +32,24 @@
     <thead>
     <tr>
         <th data-options="field:'id',checkbox:true"></th>
-        <th data-options="field:'name'" width="20">姓名</th>
-        <th data-options="field:'sex'" width="10">性别</th>
-        <th data-options="field:'jiguan'" width="20">籍贯</th>
-        <th data-options="field:'birth_time'" width="30">出生日期</th>
-        <th data-options="field:'mz'" width="30">民族</th>
-        <th data-options="field:'sfz'" width="60">身份证号</th>
-        <th data-options="field:'political_status'" width="20">政治面貌</th>
-        <th data-options="field:'position'" width="40">职务</th>
-        <th data-options="field:'department'" width="40">所属部门</th>
-        <th data-options="field:'xueli'" width="40">学历</th>
-        <th data-options="field:'zhuanye'" width="40">专业</th>
-        <th data-options="field:'tel'" width="40">联系电话</th>
-        <th data-options="field:'job_num'" width="40">工号</th>
+        <th data-options="field:'name'" width="60">姓名</th>
+        <th data-options="field:'sex'" width="25">性别</th>
+        <th data-options="field:'jiguan'" width="100">籍贯</th>
+        <th data-options="field:'birth_time'" width="100">出生日期</th>
+        <th data-options="field:'mz'" width="100">民族</th>
+        <th data-options="field:'sfz'" width="160">身份证号</th>
+        <th data-options="field:'job_num'" width="100">警号</th>
+        <th data-options="field:'in_org'" width="150">工作单位</th>
+        <th data-options="field:'political_status'" width="80">政治面貌</th>
+
+        <th data-options="field:'position'" width="80">职务</th>
+        <th data-options="field:'department'" width="80">所属部门</th>
+        <th data-options="field:'xueli'" width="80">学历</th>
+        <th data-options="field:'zhuanye'" width="120">专业</th>
+        <th data-options="field:'specialty'" width="120">文体类特长</th>
+        <th data-options="field:'tel'" width="100">联系电话</th>
+        <th data-options="field:'button',align:'left',formatter:police_operate" width="70">操作</th>
+
 
     </tr>
     </thead>
@@ -60,7 +65,7 @@
             toolbar:'#<?=$this->datagrid?>_toolbar',
             pagination:true,
           //  checkOnSelect:false,
-            fitColumns:true,
+            fitColumns:false,
             method:'get',
             pageSize:20,
             url:'<?=$this->base_url?>&m=list_data',
@@ -69,7 +74,8 @@
 
             },
             onLoadSuccess:function(data){
-
+                $('.sports-button').linkbutton({
+                });
             },
             onLoadError: function (data) {
                 $.messager.alert('系统提示','数据加载出错','error');
@@ -91,12 +97,13 @@
 
     
     function sync_police() {
-        $('#com_edit').dialog({
+
+          $('#com_edit').dialog({
             title: '同步民警信息',
             width: 1400,
             height: 800,
-            top:50,
-           // left:250,
+           // top:50,
+          // left:width,
             closed: false,
             cache: false,
             href: '<?=$this->base_url?>&m=show_sync_list',
@@ -108,8 +115,16 @@
                     }}
             ],
             onClose:function () {
-                $('#com_edit').window('resize');
+
+
+
+            },
+            onOpen:function () {
+               var  width = $(window).width() - $('#com_edit').width();
+                    width = width/2;
+               $('#com_edit').window('resize',{left:width});
             }
+            
         });
     }
 
@@ -227,6 +242,41 @@
             'sex':sex,
             'mz':mz
         });
+    }
+
+    function police_operate(value,row,index) {
+        var btns  = '';
+        <?php if(role_check(20)){?>
+        btns += "<a href='#' onclick='upload_police_attach(" + row.id + ")'  class='sports-button button-info'>上传证书</a>&nbsp;&nbsp;";
+        <?php } ?>
+        return btns;
+    }
+
+    function upload_police_attach(id) {
+        if (id) {
+            var url = 'index.php?d=admin&c=Attachment&m=police_attach&type=5&id=' + id;
+
+            $('#com_edit').dialog({
+                title: '荣誉证书管理',
+                width: 900,
+                height: 600,
+                closed: false,
+                cache: false,
+                href: url,
+                modal: true,
+                buttons: [{
+                    text: '关闭',
+                    handler: function () {
+                        $('#com_edit').dialog("close");
+                    }
+                }
+                ],
+                onClose:function () {
+                    $('#<?=$this->datagrid?>_dgd').datagrid('clearSelections');
+                }
+            });
+
+        }
     }
 
 </script>

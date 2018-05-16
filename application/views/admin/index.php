@@ -61,8 +61,8 @@
 
     <link rel="stylesheet" href="static/js/kindeditor410/themes/default/default.css" />
 
-  <!--  <script type="text/javascript" src="themes/jquery.min.js"></script>-->
-    <script src="static/js/jquery-2.1.3.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="themes/jquery.min.js"></script>
+    <!--<script src="static/js/jquery-2.1.3.min.js" type="text/javascript"></script>-->
     <script type="text/javascript" src="themes/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="themes/insdep/jquery.insdep-extend.min.js"></script>
 
@@ -105,7 +105,7 @@
                             <dd>
                                 <b class="badge-prompt"><?=$this->userInfo['nickname']?> </b>
                                 <p><a onclick="reset_pwd()">修改密码</a><i class="text-success"></i></p>
-                                <a onclick="login_out()" href="javascript:">退出</a>
+                                <a onclick="login_out()" href="javascript:void(0)">退出</a>
                             </dd>
 
                         </dl>
@@ -118,7 +118,7 @@
                 <div style="height:200px;" data-options="region:'center',border:false">
 
                     <!--start easyui-accordion-->
-                    <div style="height:200px;" id="left_menu" class="wu-side-tree">
+                    <div  id="left_menu" class="wu-side-tree">
 
                     </div>
                   <!--  <div id="left_menu" class="easyui-accordion wu-side-tree" style="width:height:200px;" data-options="border:false,fit:true">
@@ -182,7 +182,7 @@
     <!-- begin of main -->
     <div class="wu-main" data-options="region:'center'">
         <div id="wu-tabs" class="easyui-tabs" data-options="border:false,fit:true">
-            <div title="欢迎使用" data-options="href:'index.php?d=admin&c=Admin&m=main',closable:false,iconCls:'icon-tip',cls:'pd3'"></div>
+            <div title="系统主页" data-options="href:'index.php?d=admin&c=Admin&m=main',closable:false,iconCls:'icon-tip',cls:'pd3'"></div>
         </div>
     </div>
     <!-- end of main -->
@@ -240,7 +240,7 @@
                     html += '<div title="'+n.text+'">';
 
                     if(children_node.length>0){
-                        html += '<ul class="easyui-datalist" data-options="border:false,fit:true">';
+                        html += '<ul class="easyui-datalist" style="height:'+ children_node.length * 38 +'px" data-options="border:false">';
                         $.each(children_node, function(k, v) {
                             html += '<li iconCls="icon-help"><a href="javascript:void(0)" data-icon="icon-information" data-link="'+v.attributes.url+'" iframe="0">'+v.text+'</a></li>';
                         })
@@ -251,7 +251,7 @@
                     html += '</div>';
                 });
                 $('#left_menu').html(html);
-                $('#left_menu').accordion({ border:false,fit:true });
+                $('#left_menu').accordion({ border:false,fit:false ,selected:false,multiple:true  });
                 $.parser.parse('#left_menu');
 
                 $('.wu-side-tree .datagrid-btable a').bind("click",function(){
@@ -261,6 +261,8 @@
                     var iframe = $(this).attr('iframe')==1?true:false;
                     addTab(title,url,iconCls,iframe);
                 });
+
+                $("#left_menu .panel-header").trigger('click');//默认展开全部菜单
             }
 
         });
@@ -333,10 +335,27 @@
     });
     
     function login_out() {
+
+       /* if (isIE()) {alert(1)
+            if (confirm('确定要退出系统吗？')) {
+                //if(res) window.location.href = 'index.php?d=admin&c=Login&m=login_out';
+            }
+        } else {
+            $.messager.confirm('操作提示','确定要退出系统吗？',function(res){
+
+                if(res) window.location.href = 'index.php?d=admin&c=Login&m=login_out';
+            })
+        }*/
+
         $.messager.confirm('操作提示','确定要退出系统吗？',function(res){
+
             if(res) window.location.href = 'index.php?d=admin&c=Login&m=login_out';
         })
+
     }
+
+
+
     function doSearch(value,name){
         alert('You input: ' + value+'('+name+')');
     }
@@ -404,6 +423,7 @@
     
     //修改资料
     function reset_pwd() {
+
         $('#com_edit').dialog({
             title: '用户信息编辑',
             width: 600,
@@ -454,10 +474,12 @@
         if(id == "" || type == "") return;
         var title = "课程——" + name;
         if(type == 1) title = "教官——" + name;
+        if(type == 3) title = "培训视频——" + name;
+        if(type == 4) title = "培训课件——" + name;
         $('#com_edit').dialog({
             title: '评价——'+title,
             width: 600,
-            height: 250,
+            height: 300,
             closed: false,
             cache: false,
             href: 'index.php?d=admin&c=Mark&m=add&type=' + type + '&id=' + id,
@@ -495,6 +517,7 @@
                     text:'取消',
                     handler:function(){
                         $('#com_edit').dialog("close");
+                        $('#'+datagrid).datagrid('clearSelections');
                     }}
             ]
         });
@@ -503,7 +526,11 @@
     function look_mark(data_id, type, name) {
         if(data_id == "" || type == "") return;
         var title = "课程——" + name;
-        if(type == 1) title = "教官——" + name;
+        var datagrid = "curriculum_dgd";
+        if(type == 1) {
+            title = "教官——" + name;
+            datagrid = "drillmaster_dgd";
+        }
         $('#com_edit').dialog({
             title: '评价——'+title,
             width: 800,
@@ -516,6 +543,9 @@
                     text:'关闭',
                     handler:function(){
                         $('#com_edit').dialog("close");
+
+                        $('#'+datagrid).datagrid('clearSelections');
+
                     }}
             ]
         });

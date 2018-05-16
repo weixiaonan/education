@@ -138,6 +138,7 @@ class Attachment extends Common
         $file_name = $_FILES ['upload_file'] ['name'];
         $type      = $this->input->post('type');
         $data_id   = $this->input->post('data_id');
+        $file_type   = $this->input->post('file_type');
         $allowed_types_arr = array(
             'gif',
             'jpg',
@@ -153,8 +154,27 @@ class Attachment extends Common
             'txt',
             'zip',
             'rar',
-            'gz','acc','amr','wmv','mp3','wma','bz2','3gp','plist','rmvb','mp4','flv','avi','pdf'
+            'gz','acc','amr','wmv','mp3','wma','bz2','3gp','plist','rmvb','mp4','flv','avi','pdf','apk'
         );
+
+        // 定义允许上传的文件扩展名
+        $ext_arr = array(
+            'image' => array(
+                'gif',
+                'jpg',
+                'jpeg',
+                'png',
+                'bmp'
+            ),
+            'audio' => array(
+                'mp3','aac','wav','wma','cda','flac','m4a','mid','mka','mp2','mpa','mpc','ape','ofr','ogg','ra','wv','tta','ac3','dts'
+            ),
+            'video' => array(
+                'avi','asf','wmv','avs','flv','mkv','mov','3gp','mp4','mpg','mpeg','dat','ogm','vob','rm','rmvb','ts','tp','ifo','nsv'
+            )
+
+        );
+
 
         $x = explode('.', $file_name);
 
@@ -165,9 +185,24 @@ class Attachment extends Common
 
         $ext =  strtolower(end($x));
 
+        if ($file_type == '*') {
+
+        } else if ($ext_arr[$file_type]){
+            $allowed_types_arr = $ext_arr[$file_type];
+        } else if ($file_type != ''){
+            $allowed_types_arr  = explode('|', $file_type);
+
+        }
+
         if(!in_array($ext, $allowed_types_arr))
         {
-            json_msg(false, '上传的文件类型不对！');
+            $ext_arr_new = array();
+            foreach ($allowed_types_arr as $k=>$v) {
+                if ($k%7 == 0) $ext_arr_new[] = '<br>' . $v;
+                else $ext_arr_new[] = $v;
+            }
+            $ext_txt = implode(',',$ext_arr_new);
+            json_msg(false, '上传的文件类型不对,只支持' . $ext_txt . '格式。');
         }
 
         if($file_name) {
@@ -234,6 +269,7 @@ class Attachment extends Common
         $data['download_access'] = 75;
         $data['del_access'] = 76;
         $data['btn_text'] = '教学视频';
+        $data['file_type'] = 'video';
         $this->datagrid .= time();
         $this->load->view('admin/attachment_list', $data);
     }
@@ -251,6 +287,40 @@ class Attachment extends Common
         $this->datagrid .= time();
         $this->load->view('admin/attachment_list', $data);
     }
+
+    /**
+     * 创新活动资料
+     */
+    function innovate_work_attach()
+    {
+        $data['type'] = 4;
+        $data['upload_access'] = 34;
+        $data['download_access'] = 34;
+        $data['del_access'] = 34;
+        $data['btn_text'] = '创新活动资料';
+        $data['owner'] = '上传人';
+        $this->datagrid .= time();
+        $data['data_id']   = $this->input->get_post('id');
+        $this->load->view('admin/attachment_list', $data);
+    }
+
+    /**
+     * 民警荣誉证书
+     */
+    function police_attach()
+    {
+        $data['type'] = 5;
+        $data['upload_access'] = 84;
+        $data['download_access'] = 84;
+        $data['del_access'] = 84;
+        $data['btn_text'] = '荣誉证书';
+        $data['owner'] = '上传人';
+        $data['file_type'] = 'image';
+        $this->datagrid .= time();
+        $data['data_id']   = $this->input->get_post('id');
+        $this->load->view('admin/attachment_list', $data);
+    }
+
 
 
 }

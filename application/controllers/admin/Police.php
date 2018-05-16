@@ -169,7 +169,7 @@ class Police extends Common
     function save_sync()
     {
         $ids = trim($_REQUEST['id_str']);return;
-        $url = "http://192.168.0.56/nanning_personnel/index.php?d=api&c=Training&m=person_show";
+        $url = "http://m.starbe.cn/zhzg/nanning_personnel/index.php?d=api&c=Training&m=person_show";
         $post_data['key'] =  md5('hemao');
         if($ids)
         {

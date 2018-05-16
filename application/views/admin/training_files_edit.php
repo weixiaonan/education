@@ -12,18 +12,36 @@
             </tr>
 
             <tr>
-                <td class="input_tit60">课程:</td>
+                <td class="input_tit60">培训班名称:</td>
                 <td>
                     <input style="width: 400px;"  id="training_c_id" class="easyui-combobox" name="value[curriculum_id]"
                            data-options="value:'<?=$value['curriculum_id']?>',editable:false,required:true,valueField:'id',textField:'training_name',url:'index.php?d=admin&c=Curriculum&m=get_curriculum'" />
 
+                    <a style="color: red;" href="javascript:" onclick="look_curriculum()" >查看培训内容</a>
                 </td>
+
             </tr>
 
             <tr>
                 <td class="input_tit60">签到:</td>
                 <td>
                     <input id="police_id" class="easyui-datetimebox input_w_400" type="text" name="value[sign_in]" value="<?=$value['sign_in']?>"  data-options="required:true"></input>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">培训天数:</td>
+                <td>
+                    <input  class="easyui-numberbox input_w_400" id="training_days" type="text" name="value[training_days]" value="<?=$value['training_days']?>"  data-options="required:true"></input>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">培训时间:</td>
+                <td>
+                    <input  class="easyui-datebox" id="training_stime" type="text" data-options="editable:false,onSelect:onChangeDate" name="value[training_stime]" value="<?=$value['training_stime']?>"></input>
+                    至
+                    <input  class="easyui-datebox" id="training_etime" type="text" data-options="editable:false,onSelect:onChangeDate" name="value[training_etime]" value="<?=$value['training_etime']?>"></input>
                 </td>
             </tr>
 
@@ -41,21 +59,14 @@
                 </td>
             </tr>
 
-            <tr>
-                <td class="input_tit60">训练时间:</td>
-                <td>
-                    <input id="police_id" class="easyui-textbox input_w_400" type="text" name="value[training_time]" value="<?=$value['training_time']?>"  data-options="required:true"></input>
-                </td>
-            </tr>
+
 
             <tr>
                 <td class="input_tit60">是否超时:</td>
-                <td>
-                     <span class="radioSpan">
-                         <input type="radio" name="value[is_overtime]" <?php if($value['is_overtime'] == 1) echo 'checked'; ?> value="1">是</input>
-                         <input type="radio" name="value[is_overtime]" <?php if($value['is_overtime'] == 0) echo 'checked'; ?> value="0">否</input>
+                <td height="30">
+                    <input class="easyui-radiobox" name="value[is_overtime]" data-options="label:'是'" value="1" <?php if($value['is_overtime'] == 1) echo 'checked'; ?>>
+                    <input class="easyui-radiobox" name="value[is_overtime]" data-options="label:'否'" value="0" <?php if($value['is_overtime'] == 0) echo 'checked'; ?>>
 
-                     </span>
                 </td>
             </tr>
 
@@ -72,6 +83,8 @@
 
     </form>
 </div>
+<div id="look_curriculum_div"></div>
+
 <script>
 
 
@@ -146,11 +159,47 @@
             }
 
         });
+
+
+        $('#look_curriculum_div').dialog({
+            title: '详细',
+            width: 600,
+            height: 500,
+            closed: true,
+            cache: false,
+            modal: true,
+        })
+
     })
 
+    function look_curriculum() {
+       var training_c_id = $("#training_c_id").val();
+       if (training_c_id != "") {
+           var training_text = $('#training_c_id').combobox('getText');
+           var url = 'index.php?d=admin&c=Curriculum&m=edit&id='+training_c_id;
+           $('#look_curriculum_div').dialog({closed: false,title:'['+training_text+']-详细',href:url}).open();
+       } else {
+           $.messager.alert('操作提示', '未选择培训班名称', 'warning');
+       }
+    }
 
+    function onChangeDate(date){
+        var training_stime = $('#training_stime').datebox('getValue');
+        var training_etime = $('#training_etime').datebox('getValue');
 
+        if (training_stime != '' && training_etime != ''){
+            var s1 = new Date(training_stime.replace(/-/g, "/"));
+            var s2 = new Date(training_etime.replace(/-/g, "/"));
+            var days = s2.getTime() - s1.getTime();
+            var iDays = parseInt(days / (1000 * 60 * 60 * 24)) + 1;
+            if (days < 0) {
+                $.messager.alert('操作提示', '起止日期不符合', 'warning');
+                return false;
+            }
+            $("#training_days").textbox('setValue', iDays);
+        }
 
+    }
 
 </script>
 

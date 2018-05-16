@@ -23,9 +23,10 @@
     <tr>
         <th data-options="field:'id',checkbox:true"></th>
         <th data-options="field:'question'" width="120">题目</th>
-        <th data-options="field:'answer'" width="120">选项</th>
-        <th data-options="field:'correct'" width="20">答案</th>
-        <th data-options="field:'add_time'" width="120">添加时间</th>
+        <th data-options="field:'answer'" width="350">题量</th>
+        <th data-options="field:'correct'" width="20">类型</th>
+        <th data-options="field:'use_num'" width="20">使用（次）</th>
+        <th data-options="field:'add_time'" width="80">添加时间</th>
 
     </tr>
     </thead>
@@ -214,6 +215,7 @@
         var rows = $('#<?=$this->datagrid?>_dgd').datagrid('getSelections');
         if(rows.length < 1){$.messager.alert('操作提示',"请选择一行后再操作！",'warning');return false;}
         for(var i=0; i<rows.length; i++){
+            if (rows[i].use_num > 0) continue;
             ids.push(rows[i].id);
         }
         ids = ids.join(',');
@@ -243,6 +245,8 @@
                     });
                 }
             });
+        } else {
+            $.messager.alert('操作提示',"选择失败或者当前题目正在被使用！",'warning');
         }
     }
 

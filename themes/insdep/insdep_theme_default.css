@@ -111,7 +111,15 @@ i, cite, em, var, address, dfn {/*斜体*/
 .theme-left-layout .theme-left-normal .datalist .datagrid-cell{padding: 8px 15px 8px 30px; color: #878787;}
 .theme-left-layout .theme-left-minimal .datalist .datagrid-cell{ text-align:center; padding:10px 15px;}
 .theme-left-layout .theme-left-minimal .datalist{ padding: 20px 0; }
-.theme-left-layout a,.theme-left-layout a:link,.theme-left-layout a:visited,.theme-left-layout a:hover,.theme-left-layout a:active{ color: rgba(255, 255, 255, 0.7); }
+.theme-left-layout a,.theme-left-layout a:link,.theme-left-layout a:visited,.theme-left-layout a:hover,.theme-left-layout a:active{
+	color: #ffffff;
+	/*filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#C8ffffff,endColorstr=#C8ffffff);*/
+}
+
+#left_menu .datagrid-cell a{
+
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#C8ffffff,endColorstr=#C8ffffff);
+}
 
 	.theme-left-user-panel{ padding:15px 0 !important;}
 	.theme-left-user-panel dl{ overflow:hidden; clear:both;}
@@ -512,3 +520,129 @@ border-radius:0 0 3px 3px !important;
 .input_tit60{
 	text-align: right;
 }
+
+/* 编辑员的tr行高 */
+form table tr{
+	height: 40px;
+}
+
+
+/*  20171207复制官网的过来 checkbox 、 radiobox */
+.checkbox,.checkbox-inner,.checkbox-checked,.checkbox-unchecked,.checkbox-label{height: 16px; line-height: 16px;}
+.checkbox{
+	text-decoration: none;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: middle;
+	cursor: pointer;
+	position: relative;
+}
+.checkbox-inner {
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+}
+.checkbox-checked,
+.checkbox-unchecked{
+	position: relative;
+	left: -1px;
+	top: 0;
+	float: left;
+	width: 16px;
+	display: inline-block;
+	text-align: center;
+	font-size: 12px;
+	background-image: url(images/checkbox.png);
+}
+.checkbox-checked {
+	background-position: 0 0;
+}
+.checkbox-unchecked {
+	background-position: -32px 0;
+}
+.checkbox-label{ padding: 0 5px;}
+
+.checkbox-value {
+	position: absolute;
+	display: none;
+}
+.checkbox-disabled .checkbox-checked,
+.checkbox-readonly .checkbox-checked{
+	background-position: -16px 0;
+}
+.checkbox-disabled .checkbox-unchecked,
+.checkbox-readonly .checkbox-unchecked{
+	background-position: -48px 0;
+}
+.checkbox-disabled,
+.checkbox-readonly {
+	cursor: default;
+}
+.checkbox-disabled {
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	cursor: url(images/disable.png), default;
+}
+
+
+
+.radiobox{
+	text-decoration: none;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: middle;
+	cursor: pointer;
+	position: relative;
+	height: 16px;
+}
+
+.radiobox-inner {
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	height: 16px;
+}
+.radiobox-checked,
+.radiobox-unchecked{
+	position: relative;
+	left: -1px;
+	top: 0;
+	float: left;
+	width: 16px; height: 16px;
+	display: inline-block;
+	text-align: center;
+	font-size: 12px;
+	background-image: url(images/radiobox.png);
+}
+.radiobox-checked {
+	display: none;
+	background-position: 0 0;
+}
+.radiobox-unchecked {
+	display: block;
+	background-position: -32px 0;
+}
+.radiobox-label{height: 16px; line-height: 16px; padding: 0 5px;}
+
+.radiobox-value {
+	position: absolute;
+	display: none;
+}
+.radiobox-disabled .radiobox-checked,
+.radiobox-readonly .radiobox-checked{
+	background-position: -16px 0;
+}
+.radiobox-disabled .radiobox-unchecked,
+.radiobox-readonly .radiobox-unchecked{
+	background-position: -48px 0;
+}
+.radiobox-disabled,
+.radiobox-readonly {
+	cursor: default;
+}
+.radiobox-disabled {
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	cursor: url(images/disable.png), default;
+}
+

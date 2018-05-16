@@ -75,6 +75,7 @@ class Role extends Common
         if ($id > 0) {
             $rs = $this->loop_model->update_id($this->tab_r, $dt_role, $id);
         } else {
+            $dt_role['add_time'] = time();
             $rs = $this->loop_model->insert($this->tab_r, $dt_role);
         }
 

@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 include 'Common.php';
 class Question_bank extends Common
 {
+    public $correct_arr = array('', 'A', 'B', 'C', 'D', 'E', 'F');
     public function __construct()
     {
         parent::__construct();
@@ -54,7 +55,9 @@ class Question_bank extends Common
             //判断是否选为题目
             $num = $this->loop_model->get_list_num('exam_ques', array('where'=>array('exam_id'=>$exam_id, 'ques_id'=>$val['id']) ) );
             if($num>0) $val['checked']  = true;
-
+            $val['use_num'] = $this->loop_model->get_list_num('exam_ques', array('where'=>array('ques_id'=>$val['id']) ) );
+            $val['answer'] = str_replace('###', '<br>', $val['answer']);
+            $val['correct'] = $this->correct_arr[$val['correct']];
             $val['add_time'] = times($val['add_time'], 1);
         }
 

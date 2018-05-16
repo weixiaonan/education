@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/education/';
+$config['base_url'] = '';//'http://localhost/education/';
 $config['role_tab'] = array(
     'tab_a' => 'ci_access',
     'tab_g' => 'ci_group',

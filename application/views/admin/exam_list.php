@@ -49,7 +49,7 @@
             header:'#<?=$this->datagrid?>_heard',
             toolbar:'#<?=$this->datagrid?>_toolbar',
             pagination:true,
-            checkOnSelect:false,
+            //checkOnSelect:false,
             fitColumns:true,
             method:'get',
             pageSize:20,
@@ -113,7 +113,7 @@
 
         $('#com_edit').dialog({
             title: title,
-            width: 900,
+            width: 1100,
             height: 700,
             closed: false,
             top:100,
@@ -165,6 +165,7 @@
                 }
             },
             onBeforeClose:function(){
+                $('#<?=$this->datagrid?>_dgd').datagrid('clearSelections');
                 if (!bClose)
                 {
                     $.messager.confirm('操作提示','确定要退出考试吗？',function(res){
@@ -194,6 +195,7 @@
                             id : id,
                         },
                         success: function (data) {
+                            $('#<?=$this->datagrid?>_dgd').datagrid('clearSelections');
                             if(data.success){
                                 $.messager.alert('操作提示',data.message,'success',function(){
                                     $('#<?=$this->datagrid?>_dgd').datagrid("reload");
@@ -266,6 +268,7 @@
                     text:'取消',
                     handler:function(){
                         $('#com_edit').dialog("close");
+                        $('#<?=$this->datagrid?>_dgd').datagrid('clearSelections');
                     }}
             ]
         });

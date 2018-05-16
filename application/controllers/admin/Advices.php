@@ -1,26 +1,16 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 include 'Common.php';
-class Curriculum extends Common
+class Advices extends Common
 {
     public function __construct()
     {
         parent::__construct();
-        $this->table        = 'curriculum';
-        $this->base_url     = 'index.php?d=admin&c=Curriculum';
-        $this->list_view    = 'curriculum_list';
-        $this->edit_view    = 'curriculum_edit';
-        $this->datagrid     = 'curriculum';
-
-        $this->training_type = array(
-            '请选择',
-            '初任培训',
-            '晋升训练',
-            '专业训练'
-
-        );
-
-        $this->status = array('未开始', '进行中', '已结束');
+        $this->table        = 'advices';
+        $this->base_url     = 'index.php?d=admin&c=Advices';
+        $this->list_view    = 'advices_list';
+        $this->edit_view    = 'advices_edit';
+        $this->datagrid     = 'advices';
     }
     public function index()
     {
@@ -36,12 +26,12 @@ class Curriculum extends Common
         $page_size    = $this->input->get_post('rows') < 1 ? $this->PAGE_SIZE : $this->input->get_post('rows');
         $start_num    = (($page_num-1)*$page_size) < 0 ? 0 : ($page_num-1)*$page_size;
 
-        $where_str = '1=1 ';
+        $where_str = "  add_uid={$this->userInfo['id']} ";
 
 
         if($title != '')
         {
-            $where_str .= "AND ( training_name like '%{$title}%'  OR training_info like '%{$title}%' ) ";
+            $where_str .= "AND ( title like '%{$title}%'  OR content like '%{$title}%' ) ";
         }
 
         $sql       = "SELECT * FROM {$this->table} WHERE {$where_str} ORDER BY id DESC limit {$start_num},{$page_size}";
@@ -52,21 +42,7 @@ class Curriculum extends Common
 
         foreach ($list as &$val)
         {
-            $val['training_type'] = $this->training_type[$val['training_type']];
-            $val['status']        = $this->status[$val['status']];
-            $val['add_time']      = times($val['add_time'], 1);
-
-            //评价数
-            $num = $this->loop_model->get_list_num('mark', array('where'=>array('data_id'=>$val['id'], 'type'=>2) ) );
-            $val['mark_num'] = $num;
-            if( role_check(47) )
-            {
-                $val['mark_num'] = "<a href='javascript:' onclick='look_mark({$val['id']}, 2, \"{$val['training_name']}\")' title='查看评论'>{$num}(查看)</a>";
-            }
-            //参训人数
-            $curriculum_num = $this->loop_model->get_list_num('training_files', array('where'=>array('curriculum_id'=>$val['id']) ) );
-            $val['curriculum_num'] = $curriculum_num . "(<a style='color: red' onclick='look_curriculum_people({$val['id']})'>查看</a>)";
-
+            $val['add_time'] = times($val['add_time'], 1);
         }
         $data = array("total"=>$row_num['num'],"rows"=>$list);
         echo_en($data);
@@ -97,6 +73,7 @@ class Curriculum extends Common
             $query = $this->loop_model->update_id($this->table, $value, $id);
         }else{
             $value['add_time'] = time();
+            $value['add_uid']  = $this->userInfo['id'];
             $query = $this->loop_model->insert($this->table, $value);
         }
         if($query > 0)
@@ -122,12 +99,5 @@ class Curriculum extends Common
                 json_msg(false, '操作失败！');
             }
         }
-    }
-
-    public function get_curriculum()
-    {
-        $sql = " SELECT id,training_name FROM curriculum  ORDER BY id DESC ";
-        $list = $this->loop_model->list_query($sql);
-        echo_en($list);
     }
 }

@@ -1,6 +1,14 @@
 <link rel="stylesheet" type="text/css" href="static/css/exam.css" />
 <script type="text/javascript" src="static/js/quizs.js"></script>
-
+<!--[if IE]>
+<style type="text/css">
+    .main-quiz-holder .progress {
+        background:transparent;
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,endColorstr=#7F000000);
+        zoom: 1;
+    }
+</style>
+<![endif]-->
 <div id="main" style="margin-top: 30px;"">
     <h2 class="top_title"><span class="timeShow"></span></h2>
     <div class="demo">

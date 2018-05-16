@@ -14,6 +14,10 @@ class Training_files extends Common
     }
     public function index()
     {
+        $c_id = $this->input->get_post('curriculum_id');
+        if ($c_id) {
+            $this->base_url     = 'index.php?d=admin&c=Training_files&c_id=' . $c_id;
+        }
 
         $this->load->view('admin/' . $this->list_view);
     }
@@ -54,11 +58,13 @@ class Training_files extends Common
             $val['add_time']    = times($val['add_time'], 1);
             $val['is_overtime'] = $val['is_overtime'] == 1 ? '是' : '否';
 
+            $val['training_time'] = $val['training_stime'] . ' 至 ' . $val['training_etime'];
+
             $val['name']        = '';
             $val['curriculum_name'] = '';
             if($val['police_id'] != '')
             {
-                $sql  = " SELECT id, concat(name,'(身份证：',sfz,')') as name FROM police WHERE id={$val['police_id']} ";
+                $sql  = " SELECT id, concat(name,'(警号：',job_num,')') as name FROM police WHERE id={$val['police_id']} ";
                 $row = $this->loop_model->row_query($sql);
                 if($row) $val['name'] = $row['name'];
             }
@@ -90,7 +96,7 @@ class Training_files extends Common
             if($data['value']['police_id'] != '')
             {
                 $row = $this->loop_model->get_id('police', $data['value']['police_id']);
-                $data['value']['name'] = $row['name'] . '(身份证：' . $row['sfz'] . ')';
+                $data['value']['name'] = $row['name'] . '(警号：' . $row['job_num'] . ')';
             }
         }
         $data['form_id'] = $this->datagrid . '_form';
@@ -147,10 +153,10 @@ class Training_files extends Common
         $where_str = '1=1 ';
         if($title != '')
         {
-            $where_str .= " AND name like '%{$title}%' ";
+            $where_str .= " AND (name like '%{$title}%' OR job_num LIKE '{$title}%' )";
         }
 
-        $sql  = " SELECT id, concat(name,'(身份证：',sfz,')') as name FROM police WHERE {$where_str} ";
+        $sql  = " SELECT id, concat(name,'(警号：',job_num,')') as name FROM police WHERE {$where_str} ";
         $list = $this->loop_model->list_query($sql);
         echo_en($list);
 

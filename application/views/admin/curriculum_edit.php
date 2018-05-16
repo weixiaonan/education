@@ -7,7 +7,7 @@
             <tr>
                 <td class="input_tit60">训练名称:</td>
                 <td>
-                    <input class="easyui-textbox" type="text" name="value[training_name]" value="<?=$value['training_name']?>"  data-options="required:true"></input>
+                    <input class="easyui-textbox input_w_400" type="text" name="value[training_name]" value="<?=$value['training_name']?>"  data-options="required:true"></input>
                 </td>
             </tr>
 
@@ -30,28 +30,43 @@
             </tr>
 
             <tr>
+                <td class="input_tit60">计划参训人数:</td>
+                <td>
+                    <input class="easyui-numberbox input_w_400" type="text" name="value[training_people]" value="<?=$value['training_people']?>"  data-options="required:true"></input>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">训练天数:</td>
+                <td>
+                    <input class="easyui-numberbox input_w_400" type="text" id="t_days" name="value[training_days]" value="<?=$value['training_days']?>"  data-options="required:true"></input>
+                </td>
+            </tr>
+
+            <tr>
                 <td class="input_tit60">开始时间:</td>
                 <td>
-                    <input class="easyui-textbox input_w_400" type="text" name="value[start_time]" value="<?=$value['start_time']?>"  data-options="required:true"></input>
+                    <input class="easyui-datebox input_w_400" type="text" id="start_time" name="value[start_time]" value="<?=$value['start_time']?>"  data-options="required:true,editable:false,onSelect:onChangeDate"></input>
                 </td>
             </tr>
 
             <tr>
                 <td class="input_tit60">结束时间:</td>
                 <td>
-                    <input class="easyui-textbox input_w_400" type="text" name="value[end_time]" value="<?=$value['end_time']?>"  data-options="required:true"></input>
+                    <input class="easyui-datebox input_w_400" type="text" id="end_time" name="value[end_time]" value="<?=$value['end_time']?>"  data-options="required:true,editable:false,onSelect:onChangeDate"></input>
                 </td>
             </tr>
 
             <tr>
                 <td class="input_tit60">状态:</td>
-                <td>
-                     <span class="radioSpan">
+                <td  height="30">
+
                          <?php foreach ($this->status as $k=>$v){ ?>
-                             <input type="radio" name="value[status]" <?php if($value['status'] == $k) echo 'checked'; ?> value="<?=$k?>"><?=$v?></input>
+                                <input class="easyui-radiobox" name="value[status]" data-options="label:'<?=$v?>'" value="<?=$k?>" <?php if($value['status'] == $k) echo 'checked'; ?> >
                          <?php } ?>
 
-                     </span>
+
+
                 </td>
             </tr>
 
@@ -88,6 +103,23 @@ $(function () {
 })
 
 
+function onChangeDate(date){
+    var training_stime = $('#start_time').datebox('getValue');
+    var training_etime = $('#end_time').datebox('getValue');
+
+    if (training_stime != '' && training_etime != ''){
+        var s1 = new Date(training_stime.replace(/-/g, "/"));
+        var s2 = new Date(training_etime.replace(/-/g, "/"));
+        var days = s2.getTime() - s1.getTime();
+        var iDays = parseInt(days / (1000 * 60 * 60 * 24)) + 1;
+        if (days < 0) {
+            $.messager.alert('操作提示', '起止日期不符合', 'warning');
+            return false;
+        }
+        $("#t_days").textbox('setValue', iDays);
+    }
+
+}
 </script>
 
 

@@ -13,12 +13,9 @@
 
             <tr>
                 <td class="input_tit60">性别:</td>
-                <td>
-                     <span class="radioSpan">
-                         <input type="radio" name="value[sex]" <?php if($value['sex'] == 1) echo 'checked'; ?> value="1">男</input>
-                         <input type="radio" name="value[sex]" <?php if($value['sex'] == 0) echo 'checked'; ?> value="0">女</input>
-
-                     </span>
+                <td height="30">
+                    <input class="easyui-radiobox" name="value[sex]" data-options="label:'男'" value="1" <?php if($value['sex'] == 1) echo 'checked'; ?>>
+                    <input class="easyui-radiobox" name="value[sex]" data-options="label:'女'" value="0" <?php if($value['sex'] == 0) echo 'checked'; ?>>
                 </td>
             </tr>
 
@@ -39,9 +36,25 @@
             </tr>
 
             <tr>
+                <td class="input_tit60">籍贯:</td>
+                <td>
+                    <input  class="easyui-textbox input_w_400" type="text" name="value[jiguan]" value="<?=$value['jiguan']?>"  data-options=""></input>
+
+                </td>
+            </tr>
+
+            <tr>
                 <td class="input_tit60">身份证号:</td>
                 <td>
                     <input  class="easyui-textbox input_w_400" type="text" name="value[sfz]" value="<?=$value['sfz']?>"  data-options="required:true"></input>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">警号:</td>
+                <td>
+                    <input  class="easyui-textbox input_w_400" type="text" name="value[job_num]" value="<?=$value['job_num']?>"  data-options=""></input>
 
                 </td>
             </tr>
@@ -55,9 +68,25 @@
             </tr>
 
             <tr>
-                <td class="input_tit60">籍贯:</td>
+                <td class="input_tit60">学历:</td>
                 <td>
-                    <input  class="easyui-textbox input_w_400" type="text" name="value[jiguan]" value="<?=$value['jiguan']?>"  data-options=""></input>
+                    <input  class="easyui-textbox input_w_400" type="text" name="value[xueli]" value="<?=$value['xueli']?>"  data-options=""></input>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">专业:</td>
+                <td>
+                    <input  class="easyui-textbox input_w_400" type="text" name="value[zhuanye]" value="<?=$value['zhuanye']?>"  data-options=""></input>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">工作单位:</td>
+                <td>
+                    <input  class="easyui-textbox input_w_400" type="text" name="value[in_org]" value="<?=$value['in_org']?>"  data-options=""></input>
 
                 </td>
             </tr>
@@ -78,21 +107,16 @@
                 </td>
             </tr>
 
+
             <tr>
-                <td class="input_tit60">学历:</td>
+                <td class="input_tit60">文体类特长:</td>
                 <td>
-                    <input  class="easyui-textbox input_w_400" type="text" name="value[xueli]" value="<?=$value['xueli']?>"  data-options=""></input>
+                    <input  class="easyui-textbox input_w_400" type="text" name="value[specialty]" value="<?=$value['specialty']?>"  data-options=""></input>
 
                 </td>
             </tr>
 
-            <tr>
-                <td class="input_tit60">专业:</td>
-                <td>
-                    <input  class="easyui-textbox input_w_400" type="text" name="value[zhuanye]" value="<?=$value['zhuanye']?>"  data-options=""></input>
 
-                </td>
-            </tr>
 
             <tr>
                 <td class="input_tit60">联系电话:</td>
@@ -118,13 +142,7 @@
                 </td>
             </tr>
 
-            <tr>
-                <td class="input_tit60">工号:</td>
-                <td>
-                    <input  class="easyui-textbox input_w_400" type="text" name="value[job_num]" value="<?=$value['job_num']?>"  data-options=""></input>
 
-                </td>
-            </tr>
 
         </table>
 

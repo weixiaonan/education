@@ -19,15 +19,17 @@
     <thead>
     <tr>
         <th data-options="field:'id',checkbox:true"></th>
-        <th data-options="field:'title'" width="40">活动名称</th>
+        <th data-options="field:'title'" width="60">活动名称</th>
         <th data-options="field:'type'" width="20">活动类型</th>
         <th data-options="field:'scope'" width="20">活动范围</th>
+        <th data-options="field:'charge_unit'" width="50">举办单位</th>
         <th data-options="field:'charge_name'" width="20">活动负责人</th>
         <th data-options="field:'contact_info'" width="30">联系方式</th>
-        <th data-options="field:'activity_time'" width="20">活动时间</th>
-        <th data-options="field:'content'" width="120">活动内容</th>
-        <th data-options="field:'add_time'" width="50">添加时间</th>
+        <th data-options="field:'activity_time'" width="25">活动时间</th>
+        <th data-options="field:'content'" width="80">活动内容</th>
         <th data-options="field:'button',align:'left',formatter:sports_operate" width="30">操作</th>
+        <th data-options="field:'add_time'" width="40">添加时间</th>
+
     </tr>
     </thead>
 </table>
@@ -83,7 +85,7 @@
 
     function upload_attach(id) {
         if (id) {
-            var url = '<?=$this->base_url?>&m=get_attach&id=' + id;
+            var url = '<?=$this->base_url?>&m=get_attach&type=3&id=' + id;
 
                 $('#com_edit').dialog({
                     title: '相关文件管理',
@@ -128,7 +130,7 @@
         $('#com_edit').dialog({
             title: '编辑',
             width: 600,
-            height: 500,
+            height: 600,
             closed: false,
             cache: false,
             href: url,

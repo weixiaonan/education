@@ -2,12 +2,13 @@
     <?php if(role_check($upload_access)){?>
     <form style="float: left;margin-right: 50px;" id="<?=$this->datagrid?>_form"  method="post" enctype="multipart/form-data">
         <input value="<?=$type?>" name="type" type="hidden">
-        <input value="<?=$id?>" name="data_id" type="hidden">
+        <input value="<?=$data_id?>" name="data_id" type="hidden">
+        <input value="<?=$file_type ? $file_type : '*'?>" name="file_type" type="hidden">
         <input name="upload_file" id="<?=$this->datagrid?>_file" style="width:300px">
     </form>
     <?php } ?>
     <?php if(role_check($del_access)){?>
-        <a href="#" onclick="dels_<?=$this->datagrid?>()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+        <a href="#" onclick="dels_attachment()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
     <?php } ?>
 </div>
 
@@ -15,7 +16,7 @@
 <div id="<?=$this->datagrid?>_toolbar">
     名称:<input class="easyui-textbox" type="text" id="<?=$this->datagrid?>_title" name="name" data-options="prompt:'模糊查找'" />
 
-    <a href="javascript:void(0);" style="margin:0px 10px 0px 15px;width: 78px;" class="easyui-linkbutton" iconCls="icon-search" onclick="<?=$this->datagrid?>_search();"> 搜 索 </a>
+    <a href="javascript:void(0);" style="margin:0px 10px 0px 15px;width: 78px;" class="easyui-linkbutton" iconCls="icon-search" onclick="attachment_search();"> 搜 索 </a>
 
 </div>
 
@@ -23,13 +24,13 @@
     <thead>
     <tr>
         <th data-options="field:'id',checkbox:true"></th>
-        <th data-options="field:'file_name'" width="80">名称</th>
+        <th data-options="field:'file_name'" width="120">名称</th>
         <th data-options="field:'file_size'" width="20">大小</th>
         <th data-options="field:'file_ext'" width="20">类型</th>
         <th data-options="field:'download_num'" width="20">下载次数</th>
-        <th data-options="field:'name'" width="20">上传人</th>
-        <th data-options="field:'add_time'" width="80">添加时间</th>
-        <th data-options="field:'button',align:'left',formatter:attach_operate" width="20">操作</th>
+        <th data-options="field:'name'" width="30"><?=$owner ? $owner : '制作人'?></th>
+        <th data-options="field:'add_time'" width="40">添加时间</th>
+        <th data-options="field:'button',align:'left',formatter:attach_operate" width="30">操作</th>
     </tr>
     </thead>
 </table>
@@ -107,6 +108,19 @@
             btns += "<a href='#'   class='font-red'>文件不存在</a>&nbsp;&nbsp;";
         }
         <?php } ?>
+        if(row.type==1) {
+            <?php if(role_check(82)){?>
+            btns += "<a href='#' onclick='mark("+row.id+", 4, \""+row.file_name+"\" ,\"" + '<?=$this->datagrid?>_dgd' + "\" )'  class='attach-button button-info'>评价</a>&nbsp;&nbsp;";
+            <?php } ?>
+        }
+
+        if(row.type==2) {
+            <?php if(role_check(83)){?>
+            btns += "<a href='#' onclick='mark("+row.id+", 3, \""+row.file_name+"\" ,\"" + '<?=$this->datagrid?>_dgd' + "\" )'  class='attach-button button-info'>评价</a>&nbsp;&nbsp;";
+            <?php } ?>
+        }
+
+
         return btns;
     }
     

@@ -70,7 +70,7 @@ class Exam extends Common
                 $val['exam_status'] = 1;
                 $val['exam_status_txt'] = '<b class="font-blue">未开考</b>';
             }
-            if($val['end_time'] > $time_now && $val['start_time'] < $time_now)
+            if($val['end_time'] > $time_now && intval($val['start_time']) < $time_now)
             {
                 $val['exam_status'] = 2;
                 $val['exam_status_txt'] = '<b class="font-green">进行中</b>';
@@ -343,7 +343,7 @@ class Exam extends Common
         $exam_id = trim( $this->input->post('exam_id'), '"');
         if($exam_id != '')
         {
-            $data['exam_id'] = intval($exam_id);var_dump($data['exam_id']);
+            $data['exam_id'] = intval($exam_id);
             $data['uid']     = $this->userInfo['id'];
             $data['start_time'] = time();
             $query = $this->loop_model->insert('exam_log', $data);
@@ -372,7 +372,12 @@ class Exam extends Common
         $start_num    = (($page_num-1)*$page_size) < 0 ? 0 : ($page_num-1)*$page_size;
 
         $table     = 'exam_log';
-        $where_str = '1=1 ';
+        $act_type = $this->userInfo['act_type'];
+        if ($act_type == 1) {
+            $where_str = '1=1 ';
+        } else {
+            $where_str = " uid={$this->userInfo['id']} ";
+        }
 
 
         if($title != '')

@@ -25,14 +25,16 @@
     <tr>
         <th data-options="field:'id',checkbox:true"></th>
         <th data-options="field:'name'" width="50">姓名</th>
-        <th data-options="field:'sign_in'" width="30">签到时间</th>
+        <th data-options="field:'sign_in'" width="40">签到时间</th>
+        <th data-options="field:'training_days'" width="15">培训天数</th>
+        <th data-options="field:'training_time'" width="50">培训时间段</th>
         <th data-options="field:'score'" width="10">分数</th>
         <th data-options="field:'ranking'" width="10">排名</th>
-        <th data-options="field:'training_time'" width="20">训练时间</th>
-        <th data-options="field:'is_overtime'" width="10">是否超时</th>
-        <th data-options="field:'curriculum_name'" width="30">训练课程</th>
-        <th data-options="field:'training_pro_info'" width="50">训练过程信息</th>
-        <th data-options="field:'add_time'" width="120">添加时间</th>
+
+        <th data-options="field:'is_overtime'" width="15">是否超时</th>
+        <th data-options="field:'curriculum_name'" width="30">培训班名称</th>
+        <th data-options="field:'training_pro_info'" width="140">训练过程信息</th>
+        <th data-options="field:'add_time'" width="40">添加时间</th>
 
     </tr>
     </thead>
@@ -75,7 +77,7 @@
             header:'#<?=$this->datagrid?>_heard',
             toolbar:'#<?=$this->datagrid?>_toolbar',
             pagination:true,
-            checkOnSelect:false,
+           // checkOnSelect:false,
             fitColumns:true,
             method:'get',
             pageSize:20,
@@ -130,7 +132,7 @@
         $('#com_edit').dialog({
             title: '编辑',
             width: 600,
-            height: 430,
+            height: 550,
             closed: false,
             cache: false,
             href: url,

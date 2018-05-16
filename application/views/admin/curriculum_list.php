@@ -22,18 +22,21 @@
         <th data-options="field:'training_name'" width="30">训练名称</th>
         <th data-options="field:'training_type'" width="20">训练类型</th>
         <th data-options="field:'training_object'" width="40">训练对象</th>
+        <th data-options="field:'training_people'" width="20">计划参训人数</th>
+        <th data-options="field:'curriculum_num'" width="20">当前参训人数</th>
+        <th data-options="field:'training_days'" width="15">训练天数</th>
         <th data-options="field:'start_time'" width="20">开始时间</th>
         <th data-options="field:'end_time'" width="20">结束时间</th>
         <th data-options="field:'training_info'" width="80">训练内容</th>
-        <th data-options="field:'status'" width="20">状态</th>
-        <th data-options="field:'add_time'" width="60">添加时间</th>
-        <th data-options="field:'mark_num'" width="30">评价数</th>
-        <th data-options="field:'button',align:'left',formatter:curriculum_operate" width="20">操作</th>
+        <th data-options="field:'status'" width="12">状态</th>
+        <th data-options="field:'add_time'" width="30">添加时间</th>
+        <th data-options="field:'mark_num'" width="20">评价数</th>
+        <th data-options="field:'button',align:'left',formatter:curriculum_operate" width="15">操作</th>
 
     </tr>
     </thead>
 </table>
-
+<div id="look_curriculum_p"></div>
 <script type="text/javascript">
 
     $(function(){
@@ -43,7 +46,7 @@
             header:'#<?=$this->datagrid?>_heard',
             toolbar:'#<?=$this->datagrid?>_toolbar',
             pagination:true,
-            checkOnSelect:false,
+           // checkOnSelect:false,
             fitColumns:true,
             method:'get',
             pageSize:20,
@@ -72,8 +75,30 @@
         }).datagrid('getPager');//enableCellEditing
 
 
-    });
+        $('#look_curriculum_p').dialog({
+            title: '查看培训班人员',
+            width: 1400,
+            height: 900,
+            closed: true,
+            cache: false,
+           // href: 'index.php?d=admin&c=User&m=user_edit&type=reset',
+            modal: true,
+            buttons: [ {
+                    text:'关闭',
+                    handler:function(){
+                        $('#look_curriculum_p').dialog("close");
+                        $('##<?=$this->datagrid?>_dgd').datagrid('clearSelections');
+                    }}
+            ]
+        });
 
+
+    });
+    
+    function look_curriculum_people(curriculum_id) {
+        var url =  'index.php?d=admin&c=Training_files&m=index&curriculum_id=' + curriculum_id;
+        $('#look_curriculum_p').dialog({href:url}).dialog('open');
+    }
     
     function curriculum_operate(value,row,index) {
         var btns  = '';
@@ -104,7 +129,7 @@
         $('#com_edit').dialog({
             title: '编辑',
             width: 600,
-            height: 400,
+            height: 550,
             closed: false,
             cache: false,
             href: url,

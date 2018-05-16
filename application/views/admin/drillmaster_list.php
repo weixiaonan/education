@@ -22,15 +22,18 @@
     <thead>
     <tr>
         <th data-options="field:'id',checkbox:true"></th>
-        <th data-options="field:'name'" width="20">姓名</th>
-        <th data-options="field:'sex'" width="10">性别</th>
-        <th data-options="field:'birth'" width="30">出生年月</th>
-        <th data-options="field:'curriculum'" width="80">所教课程</th>
-        <th data-options="field:'speciality'" width="120">专长</th>
-        <th data-options="field:'experience'" width="120">经历</th>
-        <th data-options="field:'add_time'" width="60">添加时间</th>
-        <th data-options="field:'mark_num'" width="20">评价数</th>
-        <th data-options="field:'button',align:'left',formatter:drill_operate" width="30">操作</th>
+        <th data-options="field:'name'" width="80">姓名</th>
+        <th data-options="field:'sex'" width="20">性别</th>
+        <th data-options="field:'police_num'" width="80">警号</th>
+        <th data-options="field:'birth'" width="80">出生年月</th>
+        <th data-options="field:'curriculum'" width="180">所教课程</th>
+        <th data-options="field:'work_unit'" width="150">工作单位</th>
+        <th data-options="field:'style'" width="100">教官类别</th>
+        <th data-options="field:'speciality'" width="200">专长</th>
+        <th data-options="field:'experience'" width="250">经历</th>
+        <th data-options="field:'add_time'" width="150">添加时间</th>
+        <th data-options="field:'mark_num'" width="60">评价数</th>
+        <th data-options="field:'button',align:'left',formatter:drill_operate" width="40">操作</th>
 
     </tr>
     </thead>
@@ -70,8 +73,8 @@
             header:'#<?=$this->datagrid?>_heard',
             toolbar:'#<?=$this->datagrid?>_toolbar',
             pagination:true,
-            checkOnSelect:false,
-            fitColumns:true,
+           // checkOnSelect:false,
+            fitColumns:false,
             method:'get',
             pageSize:20,
             url:'<?=$this->base_url?>&m=list_data',
@@ -130,7 +133,7 @@
         $('#com_edit').dialog({
             title: '编辑',
             width: 600,
-            height: 400,
+            height: 570,
             closed: false,
             cache: false,
             href: url,
@@ -168,6 +171,7 @@
                     text:'取消',
                     handler:function(){
                         $('#com_edit').dialog("close");
+                        $('#<?=$this->datagrid?>_dgd').datagrid('clearSelections');
                     }}
             ]
         });

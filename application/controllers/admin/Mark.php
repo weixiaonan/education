@@ -74,6 +74,14 @@ class Mark extends Common
             {
                 $row = $this->loop_model->get_id('curriculum', $val['data_id']);
                 $val['mark_object'] = '课程——'  . $row['training_name'];
+            }else if($val['type'] == 3)
+            {
+                $row = $this->loop_model->get_id('attachment', $val['data_id']);
+                $val['mark_object'] = '培训视频——'  . $row['file_name'];
+            }else if($val['type'] == 4)
+            {
+                $row = $this->loop_model->get_id('attachment', $val['data_id']);
+                $val['mark_object'] = '培训课件——'  . $row['file_name'];
             }
         }
         $data = array("total"=>$row_num['num'],"rows"=>$list);

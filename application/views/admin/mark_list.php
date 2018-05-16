@@ -20,6 +20,8 @@
         <option value="">全部</option>
         <option value="2">课程</option>
         <option value="1">教官</option>
+            <option value="3">培训视频</option>
+            <option value="4">培训课件</option>
     </select>
     <a href="javascript:void(0);" style="margin:0px 10px 0px 15px;width: 78px;" class="easyui-linkbutton" iconCls="icon-search" onclick="<?=$this->datagrid?>_search();"> 搜 索 </a>
     <?php }?>

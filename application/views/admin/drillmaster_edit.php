@@ -13,12 +13,16 @@
 
             <tr>
                 <td class="input_tit60">性别:</td>
-                <td>
-                     <span class="radioSpan">
-                         <input type="radio" name="value[sex]" <?php if($value['sex'] == 1) echo 'checked'; ?> value="1">男</input>
-                         <input type="radio" name="value[sex]" <?php if($value['sex'] == 0) echo 'checked'; ?> value="0">女</input>
+                <td height="30">
+                    <input class="easyui-radiobox" name="value[sex]" data-options="label:'男'" value="1" <?php if($value['sex'] == 1) echo 'checked'; ?>>
+                    <input class="easyui-radiobox" name="value[sex]" data-options="label:'女'" value="0" <?php if($value['sex'] == 0) echo 'checked'; ?>>
+                </td>
+            </tr>
 
-                     </span>
+            <tr>
+                <td class="input_tit60">警号:</td>
+                <td>
+                    <input     name="value[police_num]" value="<?=$value['police_num']?>" type= "text" class= "easyui-textbox" required =""> </input>
                 </td>
             </tr>
 
@@ -35,6 +39,20 @@
                     <input style="width: 400px;"  id="good_at_c" class="easyui-combobox" name="curriculum_id[]"
                            data-options="multiple:true,editable:false,required:true,valueField:'id',textField:'training_name',url:'index.php?d=admin&c=Curriculum&m=get_curriculum'" />
 
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">工作单位:</td>
+                <td>
+                    <input     name="value[work_unit]" value="<?=$value['work_unit']?>" type= "text" class= "easyui-textbox input_w_400" required =""> </input>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">教官类别:</td>
+                <td>
+                    <input     name="value[style]" value="<?=$value['style']?>" type= "text" class= "easyui-textbox input_w_400" required =""> </input>
                 </td>
             </tr>
 

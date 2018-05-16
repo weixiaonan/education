@@ -18,6 +18,9 @@ class Login extends CI_Controller
         parent::__construct();
     }
     public function index(){
+        if ($this->session->userdata('user')) {
+            redirect('d=admin&c=Admin&m=index');
+        }
         $this->load->view("admin/login");
     }
     public function login_check(){

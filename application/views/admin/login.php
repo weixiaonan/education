@@ -10,11 +10,13 @@
     <script type="text/javascript" src="themes/jquery.easyui.min.js"></script>
     <link href="themes/insdep/icon.css" rel="stylesheet" type="text/css">
     <style>
-        body{font-family: 'Roboto', "PingFang SC","Lantinghei SC","Microsoft Yahei",微软雅黑,"Hiragino Sans GB",'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;}
+        body{margin:0; padding:0;font-family: 'Roboto', "PingFang SC","Lantinghei SC","Microsoft Yahei",微软雅黑,"Hiragino Sans GB",'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;}
         .panel{
             margin: 0px auto;
         }
-        .login_main{width: 960px; height: 485px; margin: 0 auto; background:url(static/images/login_bg.png) no-repeat 0 0; position: relative;}
+		 h2{margin:0; padding:0;}
+		.login_body{width: 100%; height: 485px;background:url(static/images/login_bg.jpg) no-repeat center 0;}
+        .login_main{width: 1200px; height: 485px; margin: 0 auto;  position: relative;}
         .login_box{ position: absolute; top:40px; right: 15px; width: 360px; height: 380px; background:url(static/images/login_box.png) no-repeat}
         .login_box_body{ padding:25px;}
         .login_box_body table td{ padding: 10px 0;}
@@ -23,7 +25,8 @@
     </style>
 </head>
 <body>
-<h2 align="center" style=" padding: 50px  0 0 0;"><img src="static/images/login_title.png"/></h2>
+<h2 align="center" style=" padding: 100px  0 25px 0;"><img src="static/images/login_title.png"/></h2>
+<div class="login_body">
 <div class="login_main">
     <div class="login_box">
         <div class="login_box_body">
@@ -46,9 +49,9 @@
             </div>
         </div>
     </div>
-    <p style="text-align: center; color: #999; font-weight: normal; font-size: 12px; margin: 15px 0 0 0 ; position: absolute; bottom: 0; width: 100%;">Copyright © 2017  All Rights Reserved</p>
 </div>
-
+<p style="text-align: center; color: #999; font-weight: normal; font-size: 12px; margin: 25px auto ; width: 100%;"><img src="static/images/login_footer.png"/></p>
+</div>
 <script>
     function submitForm(){
         var unm = $("#unm").val(), pwd = $("#pwd").val();
@@ -71,9 +74,11 @@
             cache:false,
             success: function (data) {
                 //console.info(data);
+
                 if(data.success){
+                    window.location.href = data.dt;
                     $.messager.alert('系统提示',data.message,'info',function(){
-                        window.top.location.href = data.dt;
+                        window.location.href = data.dt;
                     });
                 }else{
                     $.messager.alert('系统提示',data.message,'error');

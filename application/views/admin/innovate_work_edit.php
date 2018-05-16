@@ -5,14 +5,37 @@
         <table cellpadding="5">
 
             <tr>
-                <td class="input_tit60">创新标题:</td>
+                <td class="input_tit60">项目名称:</td>
                 <td>
                     <input class="easyui-textbox input_w_400" type="text" name="value[title]" value="<?=$value['title']?>"  data-options="required:true"></input>
                 </td>
             </tr>
 
             <tr>
-                <td class="input_tit60">创新内容:</td>
+                <td class="input_tit60">研发单位:</td>
+                <td>
+                    <input class="easyui-textbox input_w_400" type="text" name="value[develop_unit]" value="<?=$value['develop_unit']?>"  data-options="required:true"></input>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">项目地址:</td>
+                <td>
+                    <input class="easyui-textbox input_w_400" type="text" name="value[url]" value="<?=$value['url']?>"  data-options="required:false"></input>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="input_tit60">启用时间:</td>
+                <td>
+                    <input class="easyui-textbox input_w_400" type="text" name="value[use_time]" value="<?=$value['use_time']?>"  data-options="required:false"></input>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td class="input_tit60">项目简介:</td>
                 <td>
                   <!--  <input style="width: 400px;height:80px;"  class="easyui-textbox" type="text" name="value[content]" value="<?/*=$value['content']*/?>"  data-options="multiline:true"></input>
                  -->
@@ -42,6 +65,8 @@
             }
         });
     });
+
+
 </script>
 
 
